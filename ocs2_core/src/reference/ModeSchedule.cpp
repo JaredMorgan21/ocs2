@@ -52,6 +52,18 @@ size_t ModeSchedule::modeAtTime(scalar_t time) const {
   return modeSequence[ind];
 }
 
+/*Find the percentage of time the phase is along the leg's current state*/
+double ModeSchedule::percentageAtTime(scalar_t time) const {
+  const auto ind = lookup::findIndexInTimeArray(eventTimes, time);
+
+  if(ind == 0){
+    return (eventTimes[ind] - time)/eventTimes[ind];
+  }
+  else{
+    return (time - eventTimes[ind - 1])/(eventTimes[ind] - eventTimes[ind - 1]);
+  }
+}
+
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/

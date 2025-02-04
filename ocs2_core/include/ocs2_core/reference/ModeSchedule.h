@@ -66,6 +66,20 @@ struct ModeSchedule {
    */
   size_t modeAtTime(scalar_t time) const;
 
+    /**
+   *  Returns the percentage of time along in the current mode based on the query time.
+   *  Events are counted as follows:
+   *      ------ | ------ | ------ | ...  ------ | ------
+   *         t[0]     t[1]     t[2]        t[n-1]
+   *  mode: m[0]    m[1]     m[2] ...     m[n-1]    m[n]
+   *
+   *  If time equal to a switch time is requested, the lower count is taken
+   *
+   *  @param [in] time: The inquiry time.
+   *  @return the associated mode for the input time.
+   */
+  double percentageAtTime(scalar_t time) const;
+
   /** Clears modeSchedule */
   void clear() {
     eventTimes.clear();
