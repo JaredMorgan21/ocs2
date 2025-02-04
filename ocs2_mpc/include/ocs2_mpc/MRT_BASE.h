@@ -158,6 +158,14 @@ class MRT_BASE {
    */
   void addMrtObserver(std::shared_ptr<MrtObserver> mrtObserver) { observerPtrArray_.push_back(std::move(mrtObserver)); };
 
+
+  // variables related to the MPC output
+  std::unique_ptr<CommandData> activeCommandPtr_;
+  std::unique_ptr<CommandData> bufferCommandPtr_;
+  std::unique_ptr<PrimalSolution> activePrimalSolutionPtr_;
+  std::unique_ptr<PrimalSolution> bufferPrimalSolutionPtr_;
+  std::unique_ptr<PerformanceIndex> activePerformanceIndicesPtr_;
+  std::unique_ptr<PerformanceIndex> bufferPerformanceIndicesPtr_;
  protected:
   void moveToBuffer(std::unique_ptr<CommandData> commandDataPtr, std::unique_ptr<PrimalSolution> primalSolutionPtr,
                     std::unique_ptr<PerformanceIndex> performanceIndicesPtr);
@@ -172,14 +180,6 @@ class MRT_BASE {
   // flags on state of the class
   std::atomic_bool policyReceivedEver_;
   bool newPolicyInBuffer_;  // whether a new policy is waiting to be swapped in
-
-  // variables related to the MPC output
-  std::unique_ptr<CommandData> activeCommandPtr_;
-  std::unique_ptr<CommandData> bufferCommandPtr_;
-  std::unique_ptr<PrimalSolution> activePrimalSolutionPtr_;
-  std::unique_ptr<PrimalSolution> bufferPrimalSolutionPtr_;
-  std::unique_ptr<PerformanceIndex> activePerformanceIndicesPtr_;
-  std::unique_ptr<PerformanceIndex> bufferPerformanceIndicesPtr_;
 
   // thread safety
   mutable std::mutex bufferMutex_;  // for policy variables with the prefix (buffer*)
